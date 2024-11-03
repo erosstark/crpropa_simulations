@@ -9,7 +9,7 @@ energia_injecao = float(input('Digite o valor de energia de injeção aqui:'))  
 distancia_sources = float(input('Digite o valor de distância aqui:'))
 
 # Lista de distâncias
-distances = np.arange(1, distancia_sources+1, 10)  # Distâncias de 10 a 100 Mpc em intervalos de 10 Mpc
+distances = np.linspace(10, distancia_sources, 10)  # Distâncias de 10 a 100 Mpc em intervalos de 10 Mpc
 mean_observed_energies = []  # Armazena a energia média observada para cada distância
 mean_injected_energies = []  # Armazena a energia média injetada para cada distância
 k = 0
@@ -46,7 +46,7 @@ for distancia_sources in distances:
     
     # Executa a simulação com 100.000 eventos
     sim.setShowProgress(False)
-    sim.run(source, 10000, True)
+    sim.run(source, 100000, True)
     output.close()
 
     # Carregar os eventos
