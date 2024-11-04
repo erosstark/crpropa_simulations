@@ -9,7 +9,7 @@ energia_injecao = float(input('Digite o valor de energia de injeção aqui:'))  
 distancia_sources = float(input('Digite o valor de distância aqui:'))
 
 # Lista de distâncias
-distances = np.linspace(10, distancia_sources, 10)  # Distâncias de 10 a 100 Mpc em intervalos de 10 Mpc
+distances = np.linspace(100, distancia_sources, 20)  # Distâncias de 10 a 100 Mpc em intervalos de 10 Mpc
 mean_observed_energies = []  # Armazena a energia média observada para cada distância
 mean_injected_energies = []  # Armazena a energia média injetada para cada distância
 k = 0
@@ -33,7 +33,7 @@ for distancia_sources in distances:
     # Observador e saída
     obs = Observer()
     obs.add(Observer1D())
-    output = TextOutput(f'eventosLCDM/eventos_p/events_{k}.txt', Output.Event1D)
+    output = TextOutput(f'eventosLCDM/events_{k}.txt', Output.Event1D)
     obs.onDetection(output)
     sim.add(obs)
 
@@ -50,7 +50,7 @@ for distancia_sources in distances:
     output.close()
 
     # Carregar os eventos
-    d = np.genfromtxt(f'eventosLCDM/eventos_p/events_{k}.txt', names=True)
+    d = np.genfromtxt(f'eventosLCDM/events_{k}.txt', names=True)
 
     # Extrair a distância e energia observada e injetada
     R = d['D']      # Distância percorrida
@@ -64,7 +64,7 @@ for distancia_sources in distances:
     mean_observed_energies.append(mean_observed_energy)
     mean_injected_energies.append(mean_injected_energy)
 
-with open('eventosLCDM/eventos_p/energia_media.txt', 'w') as f:
+with open('eventosLCDM/energia_media.txt', 'w') as f:
     for i in range(len(distances)):
         f.write(f'{distances[i]} {mean_observed_energies[i]} {mean_injected_energies[i]}\n')
         
@@ -77,5 +77,5 @@ plt.legend()
 plt.xlabel('Distância [Mpc]', fontsize=15)
 plt.ylabel('Energia Média [EeV]', fontsize=15)
 plt.title('Energia Observada e Energia Injetada vs Distância')
-plt.savefig('energia_observada_vs_injetada.png')
+plt.savefig('energia_observada_vs_injetada_LCDM_100K.png')
 plt.show()
